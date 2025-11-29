@@ -28,15 +28,15 @@ export class TournamentViewComponent {
 
   get rightBracketRounds(): any[] {
     const rounds = this.bracketRounds;
-    if (!rounds.length) return [];
+    if (rounds.length < 2) return [];
 
     return rounds
       .slice(0, -1)
       .map((round: any) => {
         const midpoint = Math.ceil((round.matches?.length ?? 0) / 2);
-        return { ...round, matches: round.matches?.slice(midpoint) ?? [] };
+        const rightMatches = round.matches?.slice(midpoint) ?? [];
+        return { ...round, matches: [...rightMatches].reverse() };
       })
-      .map((round: any) => ({ ...round }))
       .reverse();
   }
 
