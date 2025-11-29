@@ -6,6 +6,34 @@ import { Injectable } from '@angular/core';
 })
 export class TournamentService {
   
+  private defaultBracket = {
+    format: 'Eliminación directa',
+    rounds: [
+      {
+        name: 'Cuartos de final',
+        matches: [
+          { team1: 'Cruz Azul', score1: 2, team2: 'Pelusa Caligari', score2: 0, winner: 'Cruz Azul', status: 'Finalizado' },
+          { team1: 'T1', score1: 2, team2: 'Leones Negros', score2: 1, winner: 'T1', status: 'Finalizado' },
+          { team1: 'Furia Azul', score1: 1, team2: 'Team Queso', score2: 0, winner: 'Furia Azul', status: 'Finalizado' },
+          { team1: 'Nova Esports', score1: 2, team2: 'Dragones del Sur', score2: 1, winner: 'Nova Esports', status: 'Finalizado' }
+        ]
+      },
+      {
+        name: 'Semifinales',
+        matches: [
+          { team1: 'Cruz Azul', score1: 2, team2: 'T1', score2: 1, winner: 'Cruz Azul', status: 'Finalizado' },
+          { team1: 'Furia Azul', score1: 2, team2: 'Nova Esports', score2: 3, winner: 'Nova Esports', status: 'Finalizado' }
+        ]
+      },
+      {
+        name: 'Gran Final',
+        matches: [
+          { team1: 'Cruz Azul', team2: 'Nova Esports', status: 'Programado', scheduledFor: '22 Mar 2024 · 19:00' }
+        ]
+      }
+    ]
+  };
+
   // datos de ejemplo de torneos
   tournaments = [
     {
@@ -18,7 +46,8 @@ export class TournamentService {
       startDate: '15 Mar 2024',
       status: 'Activo',
       image: 'assets/images/Background-card-play.avif',
-      organizer: 'Club Deportivo Central'
+      organizer: 'Club Deportivo Central',
+      bracket: this.defaultBracket
     },
     {
       id: 2,
@@ -30,7 +59,8 @@ export class TournamentService {
       startDate: '14 Dic 2023',
       status: 'Próximo',
       image: 'assets/images/Card-valorant.png',
-      organizer: 'ESports Pro League'
+      organizer: 'ESports Pro League',
+      bracket: this.defaultBracket
     },
     {
       id: 3,
@@ -42,7 +72,8 @@ export class TournamentService {
       winner: 'Team Queso',
       status: 'Finalizado',
       image: 'assets/images/Card-cod.png',
-      organizer: 'Gaming Masters'
+      organizer: 'Gaming Masters',
+      bracket: this.defaultBracket
     },
     {
       id: 4,
@@ -54,7 +85,8 @@ export class TournamentService {
       startDate: '01 Nov 2023',
       status: 'Activo',
       image: 'assets/images/Background-volley-card.png',
-      organizer: 'Federación Nacional'
+      organizer: 'Federación Nacional',
+      bracket: this.defaultBracket
     }
   ];
 
