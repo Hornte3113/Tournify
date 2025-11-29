@@ -64,14 +64,41 @@
       </div>
     </div>
 
-    <div class="bracket-grid">
-      <div class="bracket-round" *ngFor="let round of bracketRounds; let roundIndex = index">
-        <div class="round-header">
-          <span class="round-badge">Ronda {{ roundIndex + 1 }}</span>
-          <h3 class="round-title">{{ round.name }}</h3>
-        </div>
+    <div class="bracket-tree">
+      <div class="bracket-side">
+        <div class="side-round" *ngFor="let round of leftBracketRounds; let roundIndex = index">
+          <div class="round-header">
+            <span class="round-badge">Ronda {{ roundIndex + 1 }}</span>
+            <h3 class="round-title">{{ round.name }}</h3>
+          </div>
 
-        <div class="match-card" *ngFor="let match of round.matches">
+          <div class="match-card" *ngFor="let match of round.matches">
+            <div class="team-row" [class.winner]="match.winner === match.team1">
+              <span class="team-name">{{ match.team1 }}</span>
+              <span class="score">{{ match.score1 !== undefined ? match.score1 : '–' }}</span>
+            </div>
+
+            <div class="team-row" [class.winner]="match.winner === match.team2">
+              <span class="team-name">{{ match.team2 }}</span>
+              <span class="score">{{ match.score2 !== undefined ? match.score2 : '–' }}</span>
+            </div>
+
+            <div class="match-status-row">
+              <span class="match-status" [ngClass]="{
+                'status-finished': match.status === 'Finalizado',
+                'status-live': match.status === 'En vivo',
+                'status-upcoming': match.status === 'Programado'
+              }">{{ match.status }}</span>
+
+              <span class="match-time" *ngIf="match.scheduledFor">{{ match.scheduledFor }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bracket-center" *ngIf="finalRound">
+        <div class="center-label">Final</div>
+        <div class="match-card" *ngFor="let match of finalRound.matches">
           <div class="team-row" [class.winner]="match.winner === match.team1">
             <span class="team-name">{{ match.team1 }}</span>
             <span class="score">{{ match.score1 !== undefined ? match.score1 : '–' }}</span>
@@ -90,6 +117,37 @@
             }">{{ match.status }}</span>
 
             <span class="match-time" *ngIf="match.scheduledFor">{{ match.scheduledFor }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bracket-side bracket-side-right">
+        <div class="side-round" *ngFor="let round of rightBracketRounds; let inverseIndex = index">
+          <div class="round-header">
+            <span class="round-badge">Ronda {{ bracketRounds.length - 1 - inverseIndex }}</span>
+            <h3 class="round-title">{{ round.name }}</h3>
+          </div>
+
+          <div class="match-card" *ngFor="let match of round.matches">
+            <div class="team-row" [class.winner]="match.winner === match.team1">
+              <span class="team-name">{{ match.team1 }}</span>
+              <span class="score">{{ match.score1 !== undefined ? match.score1 : '–' }}</span>
+            </div>
+
+            <div class="team-row" [class.winner]="match.winner === match.team2">
+              <span class="team-name">{{ match.team2 }}</span>
+              <span class="score">{{ match.score2 !== undefined ? match.score2 : '–' }}</span>
+            </div>
+
+            <div class="match-status-row">
+              <span class="match-status" [ngClass]="{
+                'status-finished': match.status === 'Finalizado',
+                'status-live': match.status === 'En vivo',
+                'status-upcoming': match.status === 'Programado'
+              }">{{ match.status }}</span>
+
+              <span class="match-time" *ngIf="match.scheduledFor">{{ match.scheduledFor }}</span>
+            </div>
           </div>
         </div>
       </div>

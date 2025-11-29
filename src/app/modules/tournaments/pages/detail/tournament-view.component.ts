@@ -16,6 +16,35 @@ export class TournamentViewComponent {
     return this.tournament?.bracket?.rounds ?? [];
   }
 
+  get leftBracketRounds(): any[] {
+    const rounds = this.bracketRounds;
+    if (!rounds.length) return [];
+
+    return rounds.slice(0, -1).map((round: any) => {
+      const midpoint = Math.ceil((round.matches?.length ?? 0) / 2);
+      return { ...round, matches: round.matches?.slice(0, midpoint) ?? [] };
+    });
+  }
+
+  get rightBracketRounds(): any[] {
+    const rounds = this.bracketRounds;
+    if (!rounds.length) return [];
+
+    return rounds
+      .slice(0, -1)
+      .map((round: any) => {
+        const midpoint = Math.ceil((round.matches?.length ?? 0) / 2);
+        return { ...round, matches: round.matches?.slice(midpoint) ?? [] };
+      })
+      .map((round: any) => ({ ...round }))
+      .reverse();
+  }
+
+  get finalRound(): any | null {
+    if (!this.bracketRounds.length) return null;
+    return this.bracketRounds[this.bracketRounds.length - 1];
+  }
+
   get totalBracketMatches(): number {
     return this.bracketRounds.reduce((total, round) => total + (round.matches?.length ?? 0), 0);
   }
